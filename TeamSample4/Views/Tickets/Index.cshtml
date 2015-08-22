@@ -1,0 +1,81 @@
+﻿@model IEnumerable<TeamSample4.Models.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ticket List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assignee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrioritySelect)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusSelect)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrioritySelect)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusSelect)
+            </td>
+            <td>
+                @*todo: prevent delete if not author*@
+                @{
+                    if (User.IsInRole("Admin") || item.StatusSelect != TeamSample4.Models.Status.CLOSED)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TicketId })<text> |</text>
+                    }
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.TicketId })
+                @{
+                    if (User.Identity.Name == item.Author)
+                    {
+                        <text> | </text>@Html.ActionLink("Delete", "Delete", new { id = item.TicketId })
+                    }
+}
+            </td>
+        </tr>
+    }
+
+</table>

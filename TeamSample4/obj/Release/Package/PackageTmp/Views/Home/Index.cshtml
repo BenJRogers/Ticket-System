@@ -1,0 +1,35 @@
+﻿@using TeamSample4.Models;
+@model LoginViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Petersham Ticket System</h1>
+    <p class="lead">Ticket System for People in Petersham.</p>
+    @*<p><a href="http://localhost:2035/tickets" class="btn btn-primary btn-lg">Ticket List&raquo;</a></p>
+        *@
+</div>
+
+<div class="row">
+
+  
+   
+
+@if (Request.IsAuthenticated)
+{
+    @Html.Action("Index", "Tickets")
+}
+else
+{
+    @Html.Action("Login", "Account")
+}
+   </div>
+
+<div class="container body-content">
+    <footer>
+        
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        
+    </footer>
+</div>
